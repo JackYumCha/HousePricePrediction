@@ -46,7 +46,8 @@ namespace HousePriceScraper
                     {
                         if(index < lineNumber)
                         {
-                            continue;
+                            var row = csvReader.GetRecord<dynamic>();
+                            var dict = row as IDictionary<string, object>;
                         }
                         else
                         {
