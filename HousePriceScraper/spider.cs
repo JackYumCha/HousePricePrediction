@@ -4,8 +4,6 @@ using System.Text;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Diagnostics;
-using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium;
 using System.Net;
 using System.Threading;
 using Newtonsoft.Json;
@@ -34,19 +32,10 @@ namespace HousePriceScraper
                 //prop.SearchingStartDate = DateTime.Now;
                 //arango.Update<Property>(prop);
 
-                ChromeDriver chromeDriver;
-                ChromeOptions options = new ChromeOptions();
-
-                options.AddArgument("--headless");
-                options.AddArgument("--disable-gpu");
-                options.AddArgument("--no-sandbox");
-                options.AddArgument("--log-level=3");
-
-                chromeDriver = new ChromeDriver(options);
 
                 if (prop.RealEstateRecords == null || prop.RealEstateRecords.Count == 0)
                 {
-                    var result = chromeDriver.SearchRealEstate(prop);
+                    var result = RealEstate.SearchRealEstate(prop);
                     if (result.InvalidAddress)
                     {
                         prop.RealEstateInvalidAddress = true;
@@ -63,12 +52,10 @@ namespace HousePriceScraper
                         prop.RealEstateParking = result.Parking;
                     }
                 }
-                chromeDriver.Dispose();
 
-                chromeDriver = new ChromeDriver(options);
                 if (prop.DomainRecords == null || prop.DomainRecords.Count == 0)
                 {
-                    var result = chromeDriver.SearchDomain(prop);
+                    var result = Domain.SearchDomain(prop);
                     if (result.InvalidAddress)
                     {
                         prop.DomainInvalidAddress = true;
@@ -85,7 +72,6 @@ namespace HousePriceScraper
                         prop.DomainParking = result.Parking;
                     }
                 }
-                chromeDriver.Dispose();
 
                 if (prop.RealEstateRecords != null && prop.RealEstateRecords.Count > 0 &&
                     prop.DomainRecords != null && prop.DomainRecords.Count > 0)

@@ -7,7 +7,6 @@ using System.Diagnostics;
 
 namespace HousePriceScraper
 {
-
     public class ArangoDocumentBase
     {
         public string _key { get; set; }
@@ -64,6 +63,7 @@ namespace HousePriceScraper
         public string Action { get; set; } //sold rent
         public string Date { get; set; }
         public string Value { get; set; }
+        public string Agent { get; set; }
     }
 
     public class SearchResult
@@ -81,6 +81,7 @@ namespace HousePriceScraper
         public string Bedroom { get; set; }
         public string Bathroom { get; set; }
         public string Parking { get; set; }
+        public string RentPerWeek { get; set; }
 
         public List<HouseHistory> Data { get; set; }
     }
@@ -281,5 +282,4 @@ namespace HousePriceScraper
         public bool Complete { get; set; }
         public DateTime CompleteDate { get; set; }
     }
-
 }
