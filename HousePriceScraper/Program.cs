@@ -3,8 +3,6 @@ using System.IO;
 using System.Linq;
 using System.Collections.Generic;
 using System.Diagnostics;
-using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium;
 using System.Text.RegularExpressions;
 using CsvHelper;
 
