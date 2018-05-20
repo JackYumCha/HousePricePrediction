@@ -29,6 +29,8 @@ namespace HousePriceScraper
             if (File.Exists(lineNumberPath))
             {
                 lineNumber = int.Parse(File.ReadAllText(lineNumberPath));
+
+                Console.WriteLine($"Resumed from {lineNumber}");
             }
 
             int index = 0;
@@ -70,7 +72,8 @@ namespace HousePriceScraper
 
                             File.WriteAllText(lineNumberPath, index.ToString());
                         }
-                     
+                        index += 1;
+
                     }
                 }
 
