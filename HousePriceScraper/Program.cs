@@ -1,42 +1,62 @@
 ﻿using System;
+using System.IO;
+using System.Linq;
 using System.Collections.Generic;
 using System.Diagnostics;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium;
+using System.Text.RegularExpressions;
+using CsvHelper;
+
+
 namespace HousePriceScraper
 {
     public class Program
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
-            ChromeOptions options = new ChromeOptions();
-            options.AddArgument("--headless");
-            options.AddArgument("--disable-gpu");
-            options.AddArgument("--no-sandbox");
-            options.AddArgument("--log-level=3");
-            using (ChromeDriver chromeDriver = new ChromeDriver())
+            // --csv=filepath
+
+            Regex csv = new Regex(@"^\-\-csv=");
+
+            var argCsvPath = args.FirstOrDefault(arg => csv.IsMatch(arg));
+
+            var pathCsv = csv.Replace(argCsvPath, "");
+
+            Spider spider = new Spider();
+
+            using (StreamReader csvStreamReader = new StreamReader(pathCsv))
             {
-                chromeDriver.Url = "https://www.realestate.com.au/buy";
-                chromeDriver.Navigate();
-                var searchInputElement = chromeDriver.FindElementByCssSelector("input.rui-input.rui-location-box.rui-auto-complete-input");
-                searchInputElement.SendKeys("Sunnybank, QLD 4109; ");
-                var searchButtonElement = chromeDriver.FindElementByCssSelector("button.rui-search-button");
-                searchButtonElement.Click();
-                var advertisements = chromeDriver.FindElementsByCssSelector("div.listingInfo.rui-clearfix");
-                List<string> addresses = new List<string>();
-                foreach(var advertisement in advertisements)
+                using(CsvReader csvReader = new CsvReader(csvStreamReader))
                 {
-                    var addressElement = advertisement.FindElement(By.CssSelector("div.vcard"));
-                    addresses.Add(addressElement.Text);
+                    csvReader.Configuration.BadDataFound = null;
+                    // csvReader.Read();
+
+                    while (csvReader.Read())
+                    {
+                        var row = csvReader.GetRecord<dynamic>();
+                        var dict = row as IDictionary<string, object>;
+
+                        var prop = new Property();
+
+                        prop.UnitNumber = dict["UNIT NUMBER"] as string;
+                        prop.HouseNumber = dict["HOUSE NUMBER"] as string;
+                        prop.StreetName = dict["STREET NAME"] as string;
+                        prop.StreetType = dict["STREET TYPE"] as string;
+                        prop.StreetSuffix = dict["STREET SUFFIX"] as string;
+                        prop.Suburb = dict["SUBURB"] as string;
+                        prop.Postcode = dict["POSTCODE"] as string;
+                        prop.AddressUseType = dict["ADDRESS USE TYPE"] as string;
+                        prop.WardName = dict["WARD NAME"] as string;
+                        prop.PropertyDescription = dict["PROPERTY DESCRIPTION"] as string;
+
+                        prop.BuildKey();
+
+                        spider.Search(prop);
+                    }
                 }
-
-                //var mapLinkElement = chromeDriver.FindElementById("mapLink");
-
-                //mapLinkElement.Click();
-
-                Debugger.Break();
             }
+
         }
     }
 }
