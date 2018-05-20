@@ -33,25 +33,25 @@ namespace HousePriceScraper
                 //arango.Update<Property>(prop);
 
 
-                if (prop.RealEstateRecords == null || prop.RealEstateRecords.Count == 0)
-                {
-                    var result = RealEstate.SearchRealEstate(prop);
-                    if (result.InvalidAddress)
-                    {
-                        prop.RealEstateInvalidAddress = true;
-                    }
-                    else
-                    {
-                        prop.RealEstateLandSize = result.LandSize;
-                        prop.RealEstateFloorSize = result.FloorArea;
-                        prop.RealEstateYearBuilt = result.YearBuilt;
-                        prop.RealEstateRecords = result.Data;
-                        prop.RealEstateValueRange = result.ValueRange;
-                        prop.RealEstateBedroom = result.Bedroom;
-                        prop.RealEstateBathroom = result.Bathroom;
-                        prop.RealEstateParking = result.Parking;
-                    }
-                }
+                //if (prop.RealEstateRecords == null || prop.RealEstateRecords.Count == 0)
+                //{
+                //    var result = RealEstate.SearchRealEstate(prop);
+                //    if (result.InvalidAddress)
+                //    {
+                //        prop.RealEstateInvalidAddress = true;
+                //    }
+                //    else
+                //    {
+                //        prop.RealEstateLandSize = result.LandSize;
+                //        prop.RealEstateFloorSize = result.FloorArea;
+                //        prop.RealEstateYearBuilt = result.YearBuilt;
+                //        prop.RealEstateRecords = result.Data;
+                //        prop.RealEstateValueRange = result.ValueRange;
+                //        prop.RealEstateBedroom = result.Bedroom;
+                //        prop.RealEstateBathroom = result.Bathroom;
+                //        prop.RealEstateParking = result.Parking;
+                //    }
+                //}
 
                 if (prop.DomainRecords == null || prop.DomainRecords.Count == 0)
                 {

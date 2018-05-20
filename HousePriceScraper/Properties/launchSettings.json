@@ -2,7 +2,7 @@
   "profiles": {
     "HousePriceScraper": {
       "commandName": "Project",
-      "commandLineArgs": "--csv=C:\\Users\\erris\\Desktop\\Lecture\\20171215000odaddress.csv"
+      "commandLineArgs": "--csv=C:\\Users\\erris\\Desktop\\Lecture\\test.csv"
     }
   }
 }
