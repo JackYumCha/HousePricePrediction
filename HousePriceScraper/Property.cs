@@ -51,6 +51,9 @@ namespace HousePriceScraper
         public string DomainMidValue { get; set; }
         public string DomainHighValue { get; set; }
 
+        public string Lat { get; set; }
+        public string Lng { get; set; }
+
         public bool Searching { get; set; }
         public DateTime SearchingStartDate { get; set; }
 
@@ -82,7 +85,8 @@ namespace HousePriceScraper
         public string Bathroom { get; set; }
         public string Parking { get; set; }
         public string RentPerWeek { get; set; }
-
+        public string Lat { get; set; }
+        public string Lng { get; set; }
         public List<HouseHistory> Data { get; set; }
     }
 
