@@ -275,6 +275,65 @@ namespace HousePriceScraper
             return prop._key;
 
         }
+
+        public static string BuildGoogleAddress(this Property prop)
+        {
+            StringBuilder stb = new StringBuilder();
+
+            List<string> sections = new List<string>();
+
+            if (prop.UnitNumber != null && prop.UnitNumber != "")
+            {
+                stb.Append(prop.UnitNumber);
+                stb.Append("/");
+            }
+
+            if (prop.HouseNumber != null && prop.HouseNumber != "")
+            {
+                stb.Append(prop.HouseNumber);
+                stb.Append(" ");
+            }
+
+            if (prop.StreetName != null && prop.StreetName != "")
+            {
+                stb.Append(prop.StreetName);
+            }
+
+            if (prop.StreetType != null && prop.StreetType != "")
+            {
+                if (StreetTypes.ContainsKey(prop.StreetType.ToLower()))
+                {
+                    stb.Append(prop.StreetType);
+                    stb.Append(" ");
+                }
+                else
+                {
+                    Debug.WriteLine($"Street Type {prop.StreetType} Not Supported!");
+                    Debugger.Break();
+                }
+            }
+
+            if (prop.StreetSuffix != null && prop.StreetSuffix != "")
+            {
+                sections.Add(prop.StreetSuffix.ToLower());
+            }
+
+            if (prop.Suburb != null && prop.Suburb != "")
+            {
+                sections.Add(prop.Suburb.ToLower());
+            }
+            sections.Add("qld");
+
+            if (prop.Postcode != null && prop.Postcode != "")
+            {
+                sections.Add(prop.Postcode.ToLower());
+            }
+
+            prop._key = string.Join("-", sections).Replace(" ", "-");
+
+            return prop._key;
+
+        }
     }
 
     public class QueryCondition : ArangoDocumentBase

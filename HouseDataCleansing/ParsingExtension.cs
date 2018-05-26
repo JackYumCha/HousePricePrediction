@@ -18,6 +18,17 @@ namespace HouseDataCleansing
             return null;
         }
 
+        public static double? TryParseDouble(this string value)
+        {
+            if (value == null) return null;
+            double result = 0d;
+            if (double.TryParse(value, out result))
+            {
+                return result;
+            }
+            return null;
+        }
+
         static Regex _k = new Regex(@" *k$", RegexOptions.IgnoreCase);
         static Regex _m = new Regex(@" *m$", RegexOptions.IgnoreCase);
         public static double? TryParsePrice(this string value)
