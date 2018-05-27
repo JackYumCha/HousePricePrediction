@@ -7,6 +7,9 @@ using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using MvcAngular.Generator;
+using Microsoft.CodeAnalysis.CSharp.Scripting;
+
 
 namespace API
 {
@@ -14,12 +17,22 @@ namespace API
     {
         public static void Main(string[] args)
         {
-            BuildWebHost(args).Run();
+            if (AngularGenerator.ShouldRunMvc(args))
+            {
+                BuildWebHost(args).Run();
+            }
+        }
+
+        public static void LoadDynamic()
+        {
+
         }
 
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
+                .UseUrls("http://*:80")
                 .Build();
     }
+
 }
