@@ -38,7 +38,7 @@ class PredictionServer(prediction_pb2_grpc.PredictionServiceServicer):
         print(request)
         results = knc.kneighbors([[request.NumberOfBedrooms,
                                    request.NumberOfBathrooms,
-                                   request.NumberOfParkings,
+                                   request.NumberOfParkings * park_rate,
                                    request.Latitude * geo_rate, 
                                    request.Longitude * geo_rate]])
         return prediction_pb2.PredictionResponse(Indices=results[1][0])
@@ -51,7 +51,7 @@ def serve():
     prediction_pb2_grpc.add_PredictionServiceServicer_to_server(PredictionServer(), server)
     server.add_insecure_port('[::]:{}'.format(port))
     server.start()
-    print("Prediction Server: {}".format(51666))
+    print("Prediction Server: {}".format(port))#绑定到51666
     try:
         while True:
             time.sleep(_ONE_DAY_IN_SECONDS)#主线程休息
