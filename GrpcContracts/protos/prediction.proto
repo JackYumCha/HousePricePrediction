@@ -15,5 +15,5 @@ message PredictionResponse {
 
 service PredictionService {
 	// Find the indices of nearest houses
-	rpc FindNearestHouseIndices(PredictionRequest) returns (PredictionResponse){};
+	rpc FindNearestHouseIndices(PredictionRequest) returns (PredictionResponse){}
 }
