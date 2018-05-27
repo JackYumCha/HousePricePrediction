@@ -2,8 +2,6 @@
 using Microsoft.AspNetCore.Hosting;
 using MvcAngular.Generator;
 
-
-
 namespace API
 {
     public class Program
@@ -14,11 +12,6 @@ namespace API
             {
                 BuildWebHost(args).Run();
             }
-        }
-
-        public static void LoadDynamic()
-        {
-
         }
 
         public static IWebHost BuildWebHost(string[] args) =>
