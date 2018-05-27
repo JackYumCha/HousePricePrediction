@@ -14,7 +14,7 @@ namespace HouseDataCleansing
         public void ConvertDataFromJsonToCSV()
         {
 
-            DirectoryInfo rootData = new DirectoryInfo(@"C:\Users\dpeaudstempcal\Documents\DomainData\Data");
+            DirectoryInfo rootData = new DirectoryInfo(@"C:\Users\erris\Desktop\New Data");
 
             List<FileInfo> allFiles = rootData.GetDirectories().Aggregate(new List<FileInfo>(), (list, dir) =>
             {
@@ -22,79 +22,93 @@ namespace HouseDataCleansing
                 return list;
             });
 
-            var resultCsv = @"C:\Users\dpeaudstempcal\Documents\DomainData\data.csv";
+            var xCsv = @"C:\Users\erris\Desktop\New Data\x.csv";
+            var yCsv = @"C:\Users\erris\Desktop\New Data\y.csv";
+            var indexKeyCsv = @"C:\Users\erris\Desktop\New Data\index-key.csv";
 
             var resultHistoryRoot = @"C:\Users\erris\Desktop\House Data\4110History";
 
-            using(StreamWriter sw = new StreamWriter(resultCsv))
+            using(StreamWriter swX = new StreamWriter(xCsv))
             {
-                using(CsvWriter csv = new CsvWriter(sw))
+                using(CsvWriter csvX = new CsvWriter(swX))
                 {
-                    csv.WriteField("Unit");
-                    csv.WriteField("StreetNumber");
-                    csv.WriteField("StreetName");
-                    csv.WriteField("StreetType");
-                    csv.WriteField("StreetSuffix");
-                    csv.WriteField("NumberOfBedrooms");
-                    csv.WriteField("NumberOfBathrooms");
-                    csv.WriteField("NumberOfParkings");
-                    csv.WriteField("MiddlePrice");
-                    csv.NextRecord();
-
-                    foreach (FileInfo filename in allFiles)
+                    using (StreamWriter swY = new StreamWriter(yCsv))
                     {
-                        string json = File.ReadAllText(filename.FullName);
-                        var property = JsonConvert.DeserializeObject<HousePriceScraper.Property>(json);
-
-                        // number of rooms, number of parking, number of bathrooms
-                        // year build, landsize
-
-                        int? numberOfBedrooms = property.DomainBedroom.TryParseInt();
-
-                        int? numberOfBathrooms = property.DomainBathroom.TryParseInt();
-
-                        int? numberOfParkings = property.DomainParking.TryParseInt();
-
-                        double? middle = property.DomainMidValue.TryParsePrice();
-
-                        csv.WriteField(property.UnitNumber);
-                        csv.WriteField(property.HouseNumber);
-                        csv.WriteField(property.StreetName);
-                        csv.WriteField(property.StreetType);
-                        csv.WriteField(property.StreetSuffix);
-                        csv.WriteField(numberOfBedrooms);
-                        csv.WriteField(numberOfBathrooms);
-                        csv.WriteField(numberOfParkings);
-                        csv.WriteField(middle);
-                        csv.NextRecord();
-
-                        if(property.DomainRecords != null && property.DomainRecords.Count > 0)
+                        using (CsvWriter csvY = new CsvWriter(swY))
                         {
-
-                            using (StreamWriter swHis = new StreamWriter($@"{resultHistoryRoot}\{property._key}.csv"))
+                            using (StreamWriter swIndexKey = new StreamWriter(indexKeyCsv))
                             {
-                                using (CsvWriter csvHis = new CsvWriter(swHis))
+                                using (CsvWriter csvIndexKey = new CsvWriter(swIndexKey))
                                 {
+                                    csvX.WriteField("NumberOfBedrooms");
+                                    csvX.WriteField("NumberOfBathrooms");
+                                    csvX.WriteField("NumberOfParkings");
+                                    csvX.WriteField("Latitude");
+                                    csvX.WriteField("Longitude");
+                                    csvX.NextRecord();
 
-                                    csvHis.WriteField("Action");
-                                    csvHis.WriteField("Agent");
-                                    csvHis.WriteField("Date");
-                                    csvHis.WriteField("Value");
-                                    csvHis.NextRecord();
+                                    int index = 0;
 
-                                    foreach (var record in property.DomainRecords)
+                                    csvY.WriteField("HouseIndex");
+                                    csvY.NextRecord();
+
+                                    csvIndexKey.WriteField("HouseIndex");
+                                    csvIndexKey.WriteField("HouseKey");
+                                    csvIndexKey.WriteField("Postcode");
+
+                                    foreach (FileInfo filename in allFiles)
                                     {
-                                        csvHis.WriteField(record.Action);
-                                        csvHis.WriteField(record.Agent);
-                                        csvHis.WriteField(record.Date);
-                                        csvHis.WriteField(record.Value);
-                                        csvHis.NextRecord();
+                                        string json = File.ReadAllText(filename.FullName);
+                                        var property = JsonConvert.DeserializeObject<HousePriceScraper.Property>(json);
+
+                                        // number of rooms, number of parking, number of bathrooms
+                                        // year build, landsize
+
+                                        int? numberOfBedrooms = property.DomainBedroom.TryParseInt();
+
+                                        int? numberOfBathrooms = property.DomainBathroom.TryParseInt();
+
+                                        int? numberOfParkings = property.DomainParking.TryParseInt();
+
+                                        double? middle = property.DomainMidValue.TryParsePrice();
+
+                                        if (!numberOfBedrooms.HasValue || numberOfBedrooms.Value == 0)
+                                            continue;
+                                        if (!numberOfBathrooms.HasValue || numberOfBathrooms.Value == 0)
+                                            continue;
+                                        if (!numberOfParkings.HasValue)
+                                            numberOfParkings = 0;
+
+                                        if (property.Lat == null || property.Lat == "")
+                                            continue;
+                                        if (property.Lng == null || property.Lng == "")
+                                            continue;
+
+                                        csvX.WriteField(numberOfBedrooms);
+                                        csvX.WriteField(numberOfBathrooms);
+                                        csvX.WriteField(numberOfParkings);
+                                        csvX.WriteField(property.Lat);
+                                        csvX.WriteField(property.Lng);
+                                        csvX.NextRecord();
+
+                                        csvY.WriteField(index);
+                                        csvY.NextRecord();
+
+                                        csvIndexKey.WriteField(index);
+                                        csvIndexKey.WriteField(property._key);
+                                        csvIndexKey.WriteField(property.Postcode);
+                                        csvIndexKey.NextRecord();
+
+
+                                        index += 1;
                                     }
+
 
                                 }
                             }
                         }
                     }
+
                 }
             }
             
