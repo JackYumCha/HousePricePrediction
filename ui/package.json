@@ -7,7 +7,9 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "api": "mvcng -s \"..\\API\" -p \"..\\API\\API.csproj\" -t src\\app\\services\\mvc-api -a \"API\" ",
+    "deploy": "node \"node_modules/nggitres/index.js\" \"dist\" \"../SeekAPI/SeekAPI/wwwroot\" \"../Versions\" \"https://rawgit.com/JackYumCha/SeekKeywords/master/Versions\" "
   },
   "private": true,
   "dependencies": {
@@ -41,6 +43,7 @@
     "karma-coverage-istanbul-reporter": "~1.4.2",
     "karma-jasmine": "~1.1.1",
     "karma-jasmine-html-reporter": "^0.2.2",
+    "nggitres": "1.0.0",
     "protractor": "~5.3.0",
     "ts-node": "~5.0.1",
     "tslint": "~5.9.1"

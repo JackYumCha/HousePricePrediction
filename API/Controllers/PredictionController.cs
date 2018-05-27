@@ -15,7 +15,7 @@ namespace API.Controllers
 {
     [Angular, Route("[controller]/[action]")]
 
-    public class PredictionController
+    public class PredictionController: Controller
     {
         private readonly PredictionService.PredictionServiceClient predictionServiceClient;
         private readonly Dictionary<int, HouseIndex> houseIndices;
@@ -31,7 +31,7 @@ namespace API.Controllers
         }
 
         [HttpPost]
-        public async Task<HousePredictionResponse> Predict(HousePredictionRequest request)
+        public async Task<HousePredictionResponse> Predict([FromBody] HousePredictionRequest request)
         {
 
             var response = await predictionServiceClient.FindNearestHouseIndicesAsync(new PredictionRequest()
@@ -50,7 +50,7 @@ namespace API.Controllers
                 var hi = houseIndices[index];
 
                 string path = $@"{this.houseDataSource}/{hi.Postcode}/{hi.Key}.json";
-                string json = File.ReadAllText(path);
+                string json = System.IO.File.ReadAllText(path);
                 var prop = JsonConvert.DeserializeObject<Property>(json);
 
                 double value = 0d;
