@@ -26,8 +26,6 @@ namespace HouseDataCleansing
             var yCsv = @"C:\Users\erris\Desktop\New Data\y.csv";
             var indexKeyCsv = @"C:\Users\erris\Desktop\New Data\index-key.csv";
 
-            var resultHistoryRoot = @"C:\Users\erris\Desktop\House Data\4110History";
-
             using(StreamWriter swX = new StreamWriter(xCsv))
             {
                 using(CsvWriter csvX = new CsvWriter(swX))
