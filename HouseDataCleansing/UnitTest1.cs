@@ -53,6 +53,7 @@ namespace HouseDataCleansing
                                     csvIndexKey.WriteField("HouseIndex");
                                     csvIndexKey.WriteField("HouseKey");
                                     csvIndexKey.WriteField("Postcode");
+                                    csvIndexKey.NextRecord();
 
                                     foreach (FileInfo filename in allFiles)
                                     {

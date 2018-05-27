@@ -2,8 +2,8 @@ from sklearn import neighbors
 import numpy as np
 
 # read csv file into numpy
-x = np.genfromtxt("D:\\VSTS\\Repos\\HouseData\\x.csv", dtype=np.float64, delimiter=',', skip_header=1)
-y = np.genfromtxt("D:\\VSTS\\Repos\\HouseData\\y.csv", dtype=np.float64, delimiter=',', skip_header=1)
+x = np.genfromtxt("C:\\Users\\erris\\Desktop\\New Data\\x.csv", dtype=np.float64, delimiter=',', skip_header=1)
+y = np.genfromtxt("C:\\Users\\erris\\Desktop\\New Data\\y.csv", dtype=np.float64, delimiter=',', skip_header=1)
 
 def lnglatWeights(row,multipler):
     return [row[0],row[1],row[2],row[3]*multipler,row[4]*multipler];
@@ -22,7 +22,7 @@ knc.fit(x, y)
 # try example:
 
 # 76 Valhalla Street Sunnybank Qld 4109
-# 4,3,2,153.064843,-27.5753528
+# 4,3,2,-27.5753528,153.064843
 
 results = knc.kneighbors([[4,3,2,-27.5753528 * geo_rate, 153.064843 * geo_rate]])
 
