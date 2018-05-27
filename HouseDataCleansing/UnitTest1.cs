@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.IO;
 using Xunit;
 using Newtonsoft.Json;
@@ -13,9 +15,15 @@ namespace HouseDataCleansing
         public void ConvertDataFromJsonToCSV()
         {
 
-            var fileList = Directory.GetFiles(@"C:\Users\erris\Desktop\House Data\4110");
+            DirectoryInfo rootData = new DirectoryInfo(@"C:\Users\dpeaudstempcal\Documents\DomainData\Data");
 
-            var resultCsv = @"C:\Users\erris\Desktop\House Data\4110.csv";
+            List<FileInfo> allFiles = rootData.GetDirectories().Aggregate(new List<FileInfo>(), (list, dir) =>
+            {
+                list.AddRange(dir.GetFiles());
+                return list;
+            });
+
+            var resultCsv = @"C:\Users\dpeaudstempcal\Documents\DomainData\data.csv";
 
             var resultHistoryRoot = @"C:\Users\erris\Desktop\House Data\4110History";
 
@@ -34,9 +42,9 @@ namespace HouseDataCleansing
                     csv.WriteField("MiddlePrice");
                     csv.NextRecord();
 
-                    foreach (string filename in fileList)
+                    foreach (FileInfo filename in allFiles)
                     {
-                        string json = File.ReadAllText(filename);
+                        string json = File.ReadAllText(filename.FullName);
                         var property = JsonConvert.DeserializeObject<HousePriceScraper.Property>(json);
 
                         // number of rooms, number of parking, number of bathrooms

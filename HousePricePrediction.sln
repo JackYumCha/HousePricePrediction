@@ -5,7 +5,9 @@ VisualStudioVersion = 15.0.27428.2005
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HousePriceScraper", "HousePriceScraper\HousePriceScraper.csproj", "{9F2246E0-9725-45F1-88FC-1095DC8303C6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HouseDataCleansing", "HouseDataCleansing\HouseDataCleansing.csproj", "{79DA87FD-12C4-4981-AF41-7ACEED4A635C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HouseDataCleansing", "HouseDataCleansing\HouseDataCleansing.csproj", "{79DA87FD-12C4-4981-AF41-7ACEED4A635C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API", "API\API.csproj", "{828EBD01-B70B-4931-8470-0482AD01C77F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{79DA87FD-12C4-4981-AF41-7ACEED4A635C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{79DA87FD-12C4-4981-AF41-7ACEED4A635C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{79DA87FD-12C4-4981-AF41-7ACEED4A635C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{828EBD01-B70B-4931-8470-0482AD01C77F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{828EBD01-B70B-4931-8470-0482AD01C77F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{828EBD01-B70B-4931-8470-0482AD01C77F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{828EBD01-B70B-4931-8470-0482AD01C77F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

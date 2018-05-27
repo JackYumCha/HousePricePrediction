@@ -72,6 +72,12 @@ namespace HousePriceScraper
 
                     var propObj = JsonConvert.DeserializeObject<PropertyObject>(objectJson);
 
+                    if(propObj.addressCoordinate != null)
+                    {
+                        result.Lat = propObj.addressCoordinate.lat;
+                        result.Lng = propObj.addressCoordinate.lon;
+                    }
+                    
                     result.Bedroom = propObj.bedrooms.ToString();
                     result.Bathroom = propObj.bathrooms.ToString();
                     result.Parking = propObj.carSpaces.ToString();
@@ -113,8 +119,8 @@ namespace HousePriceScraper
 
     public class AddressCoordinate
     {
-        public double lat { get; set; }
-        public double lon { get; set; }
+        public string lat { get; set; }
+        public string lon { get; set; }
     }
 
     public class Cadastre

@@ -70,6 +70,8 @@ namespace HousePriceScraper
                         prop.DomainBedroom = result.Bedroom;
                         prop.DomainBathroom = result.Bathroom;
                         prop.DomainParking = result.Parking;
+                        prop.Lat = result.Lat;
+                        prop.Lng = result.Lng;
                     }
                 }
 
