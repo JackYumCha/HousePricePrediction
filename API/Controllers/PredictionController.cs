@@ -49,7 +49,7 @@ namespace API.Controllers
             {
                 var hi = houseIndices[index];
 
-                string path = $@"{this.houseDataSource}/{hi.Postcode}/{hi.Key}.json";
+                string path = $@"{this.houseDataSource.DirectoryPath}/{hi.Postcode}/{hi.Key}.json";
                 string json = System.IO.File.ReadAllText(path);
                 var prop = JsonConvert.DeserializeObject<Property>(json);
 
