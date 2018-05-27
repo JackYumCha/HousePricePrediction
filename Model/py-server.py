@@ -14,7 +14,7 @@ _ONE_DAY_IN_SECONDS = 60 * 60 * 24
 
 # read csv file into numpy
 x = np.genfromtxt("E:\\database practice\\House Data\\x.csv", dtype=np.float64, delimiter=',', skip_header=1)
-y = np.genfromtxt("D:\\VSTS\\Repos\\HouseData\\y.csv", dtype=np.float64, delimiter=',', skip_header=1)
+y = np.genfromtxt("E:\\database practice\\House Data\\y.csv", dtype=np.float64, delimiter=',', skip_header=1)
 
 def lnglatWeights(row,geo_multipler,park_multiplier):
     return [row[0],row[1],row[2]*park_multiplier,row[3]*geo_multipler,row[4]*geo_multipler];
