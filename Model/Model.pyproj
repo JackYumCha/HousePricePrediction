@@ -22,6 +22,14 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Model.py" />
+    <Compile Include="prediction_pb2.py" />
+    <Compile Include="prediction_pb2_grpc.py" />
+    <Compile Include="py-server.py">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="generate-code.cmd" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in
