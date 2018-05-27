@@ -111,8 +111,8 @@ namespace API
                     new Info
                     {
                         Version = "1",
-                        Title = "Job API Server",
-                        Description = "Job API",
+                        Title = "House Prediction API Server",
+                        Description = "House Prediction API",
                         TermsOfService = "N/A"
                     })
                 );
@@ -140,7 +140,7 @@ namespace API
             app.UseDefaultFiles();
             app.UseStaticFiles();
             app.UseSwagger();
-            app.UseSwaggerUI(setup => setup.SwaggerEndpoint($"/swagger/{SwaggerApiName}/swagger.json", "Job API"));
+            app.UseSwaggerUI(setup => setup.SwaggerEndpoint($"/swagger/{SwaggerApiName}/swagger.json", "House Prediction API"));
             app.UseMvc(routes =>
             {
                 routes.MapSpaFallbackRoute("spaFallback", new { controller = "Home", action = "Spa" });

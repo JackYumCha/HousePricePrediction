@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using Microsoft.Extensions.Configuration;
 using Autofac;
 using Serilog;
-using Serilog.Configuration;
-using Serilog.Events;
 
 namespace API.AutoFac
 {

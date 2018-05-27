@@ -10,6 +10,6 @@ namespace API.Entities
     public class HousePredictionResponse
     {
         public double Price { get; set; }
-        public List<string> SimilarHouese { get; set; }
+        public List<string> SimilarHoueses { get; set; }
     }
 }
