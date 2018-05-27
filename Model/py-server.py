@@ -1,4 +1,4 @@
-from concurrent import futures
+from concurrent import futures#实现多线程
 import time
 
 import grpc
@@ -13,15 +13,16 @@ _ONE_DAY_IN_SECONDS = 60 * 60 * 24
 
 
 # read csv file into numpy
-x = np.genfromtxt("D:\\VSTS\\Repos\\HouseData\\x.csv", dtype=np.float64, delimiter=',', skip_header=1)
+x = np.genfromtxt("E:\\database practice\\House Data\\x.csv", dtype=np.float64, delimiter=',', skip_header=1)
 y = np.genfromtxt("D:\\VSTS\\Repos\\HouseData\\y.csv", dtype=np.float64, delimiter=',', skip_header=1)
 
-def lnglatWeights(row,multipler):
-    return [row[0],row[1],row[2],row[3]*multipler,row[4]*multipler];
+def lnglatWeights(row,geo_multipler,park_multiplier):
+    return [row[0],row[1],row[2]*park_multiplier,row[3]*geo_multipler,row[4]*geo_multipler];
 
 geo_rate = 100000000.
+park_rate = 0.6
 
-x = np.apply_along_axis(lnglatWeights, 1, x,geo_rate )
+x = np.apply_along_axis(lnglatWeights, 1, x,geo_rate,park_rate )
 print(x)
 print(y)
 
@@ -45,6 +46,7 @@ class PredictionServer(prediction_pb2_grpc.PredictionServiceServicer):
 port = 51666
 
 def serve():
+    #grpc生成server的文件.
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=1))
     prediction_pb2_grpc.add_PredictionServiceServicer_to_server(PredictionServer(), server)
     server.add_insecure_port('[::]:{}'.format(port))
@@ -52,7 +54,7 @@ def serve():
     print("Prediction Server: {}".format(51666))
     try:
         while True:
-            time.sleep(_ONE_DAY_IN_SECONDS)
+            time.sleep(_ONE_DAY_IN_SECONDS)#主线程休息
     except KeyboardInterrupt:
         server.stop(0)
 
