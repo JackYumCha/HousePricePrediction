@@ -14,6 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\GrpcContracts\GrpcContracts.csproj" />
     <ProjectReference Include="..\HousePriceScraper\HousePriceScraper.csproj" />
   </ItemGroup>
 

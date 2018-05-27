@@ -17,13 +17,13 @@ _ONE_DAY_IN_SECONDS = 60 * 60 * 24
 x = np.genfromtxt("C:\\data\\x.csv", dtype=np.float64, delimiter=',', skip_header=1)
 y = np.genfromtxt("C:\\data\\y.csv", dtype=np.float64, delimiter=',', skip_header=1)
 
-def lnglatWeights(row,geo_multipler,park_multipler):
-    return [row[0],row[1],row[2],row[3]*multipler,row[4]*multipler];
+def lnglatWeights(row,geo_multiplier, park_multiplier):
+    return [row[0],row[1],row[2]*park_multiplier,row[3]*geo_multiplier,row[4]*geo_multiplier];
 
 geo_rate = 100000000.
-park_rate=0.6
+park_rate = 0.6
 
-x = np.apply_along_axis(lnglatWeights, 1, x,geo_rate, park_rate )
+x = np.apply_along_axis(lnglatWeights, 1, x, geo_rate, park_rate)
 print(x)
 print(y)
 
@@ -39,7 +39,7 @@ class PredictionServer(prediction_pb2_grpc.PredictionServiceServicer):
         print(request)
         results = knc.kneighbors([[request.NumberOfBedrooms,
                                    request.NumberOfBathrooms,
-                                   request.NumberOfParkings,
+                                   request.NumberOfParkings * park_rate,
                                    request.Latitude * geo_rate, 
                                    request.Longitude * geo_rate]])
         return prediction_pb2.PredictionResponse(Indices=results[1][0])
@@ -47,11 +47,11 @@ class PredictionServer(prediction_pb2_grpc.PredictionServiceServicer):
 port = 51666
 
 def serve():
-    server = grpc.server(futures.ThreadPoolExecutor(max_workers=1))
+    server = grpc.server(futures.ThreadPoolExecutor(max_workers=2))
     prediction_pb2_grpc.add_PredictionServiceServicer_to_server(PredictionServer(), server)
     server.add_insecure_port('[::]:{}'.format(port))
     server.start()
-    print("Prediction Server: {}".format(51666))
+    print("Prediction Server: {}".format(port))
     try:
         while True:
             time.sleep(_ONE_DAY_IN_SECONDS)
