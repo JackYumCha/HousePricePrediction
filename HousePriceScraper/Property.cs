@@ -275,6 +275,67 @@ namespace HousePriceScraper
             return prop._key;
 
         }
+
+        public static string BuildGoogleAddress(this Property prop)
+        {
+            StringBuilder stb = new StringBuilder();
+
+            if (prop.UnitNumber != null && prop.UnitNumber != "")
+            {
+                stb.Append(prop.UnitNumber);
+                stb.Append("/");
+            }
+
+            if (prop.HouseNumber != null && prop.HouseNumber != "")
+            {
+                stb.Append(prop.HouseNumber);
+                stb.Append(" ");
+            }
+
+            if (prop.StreetName != null && prop.StreetName != "")
+            {
+                stb.Append(prop.StreetName);
+            }
+
+            if (prop.StreetType != null && prop.StreetType != "")
+            {
+                if (StreetTypes.ContainsKey(prop.StreetType.ToLower()))
+                {
+                    stb.Append(prop.StreetType);
+                    
+                }
+                else
+                {
+                    Debug.WriteLine($"Street Type {prop.StreetType} Not Supported!");
+                    Debugger.Break();
+                }
+            }
+
+            if (prop.StreetSuffix != null && prop.StreetSuffix != "")
+            {
+                stb.Append(" ");
+                stb.Append(prop.StreetSuffix.ToLower());
+                
+            }
+            stb.Append(",");
+
+            if (prop.Suburb != null && prop.Suburb != "")
+            {
+                stb.Append(prop.Suburb.ToLower());
+                stb.Append(",");
+            }
+            stb.Append("QLD");
+            stb.Append(" ");
+
+            if (prop.Postcode != null && prop.Postcode != "")
+            {
+                stb.Append(prop.Postcode);
+            }
+ 
+            return stb.ToString();
+
+        }
+
     }
 
     public class QueryCondition : ArangoDocumentBase

@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API", "API\API.csproj", "{8
 EndProject
 Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "Model", "Model\Model.pyproj", "{A58BEBFC-96C0-496F-9386-12BF811A541E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GrpcContracts", "GrpcContracts\GrpcContracts.csproj", "{5778859C-96BB-4573-9FC5-3CD8A98A062B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GrpcContracts", "GrpcContracts\GrpcContracts.csproj", "{5778859C-96BB-4573-9FC5-3CD8A98A062B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
