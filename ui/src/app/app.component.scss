@@ -9,8 +9,41 @@
 
 div.input {
     display: flex;
-    flex: 0 0 24px;
 }
+
+@media screen and (min-width: 1200px) {
+    /* STYLES HERE */
+    div.box{
+        display: flex;
+        flex-direction: row;
+    }
+    div.input{
+        flex: 0 0 24px;
+    }
+}
+
+@media screen and (min-width: 800px) and (max-width: 1200px) { 
+    /* STYLES HERE */
+    div.box{
+        display: flex;
+        flex-direction: column;
+    }
+    div.input{
+        flex: 0 0 46px;
+    }
+}
+
+@media screen and (min-width: 480px) and (max-width: 800px) { 
+    /* STYLES HERE */
+    div.box{
+        display: flex;
+        flex-direction: column;
+    }
+    div.input{
+        flex: 0 0 46px;
+    }
+}
+
 
 div[google-map]{
     display: flex;

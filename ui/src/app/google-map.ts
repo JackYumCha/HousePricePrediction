@@ -47,6 +47,7 @@ export class GoogleMapAPILoader {
                 GoogleMapAPILoader.APILoadedPromiseCallback.reject(error);
             };
         });
+
         document.body.appendChild(script);
         return GoogleMapAPILoader.GoogleMapScriptLoadingPromise;
     }

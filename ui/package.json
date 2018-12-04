@@ -9,7 +9,7 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "api": "mvcng -s \"..\\API\" -p \"..\\API\\API.csproj\" -t src\\app\\services\\mvc-api -a \"API\" ",
-    "deploy": "node \"node_modules/nggitres/index.js\" \"dist\" \"../SeekAPI/SeekAPI/wwwroot\" \"../Versions\" \"https://rawgit.com/JackYumCha/SeekKeywords/master/Versions\" "
+    "deploy": "node \"node_modules/nggitres/index.js\" \"dist\" \"../API/wwwroot\" \"../Versions\" \"https://rawgit.com/JackYumCha/SeekKeywords/master/Versions\" "
   },
   "private": true,
   "dependencies": {

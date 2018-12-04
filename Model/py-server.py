@@ -13,11 +13,12 @@ import numpy as np
 _ONE_DAY_IN_SECONDS = 60 * 60 * 24
 
 
-# read csv file into numpy
+# read csv file into numpy, they are the instances for kNN
 x = np.genfromtxt("C:\\Users\\erris\\Desktop\\New Data\\x.csv", dtype=np.float64, delimiter=',', skip_header=1)
 y = np.genfromtxt("C:\\Users\\erris\\Desktop\\New Data\\y.csv", dtype=np.float64, delimiter=',', skip_header=1)
 
-def lnglatWeights(row,geo_multiplier, park_multiplier):
+# define the weights for longitude and latitude
+def lnglatWeights(row, geo_multiplier, park_multiplier):
     return [row[0],row[1],row[2]*park_multiplier,row[3]*geo_multiplier,row[4]*geo_multiplier];
 
 geo_rate = 100000000.
@@ -27,11 +28,9 @@ x = np.apply_along_axis(lnglatWeights, 1, x, geo_rate, park_rate)
 print(x)
 print(y)
 
-
 knc = neighbors.KNeighborsClassifier(algorithm='auto')
 
 knc.fit(x, y)
-
 
 class PredictionServer(prediction_pb2_grpc.PredictionServiceServicer):
 
@@ -46,10 +45,15 @@ class PredictionServer(prediction_pb2_grpc.PredictionServiceServicer):
 
 port = 51666
 
+# define the Grpc server
 def serve():
+    # create Grpc server
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=2))
+    # add service to the server
     prediction_pb2_grpc.add_PredictionServiceServicer_to_server(PredictionServer(), server)
+    # add port binding to the server 
     server.add_insecure_port('[::]:{}'.format(port))
+    # start the server
     server.start()
     print("Prediction Server: {}".format(port))
     try:
@@ -59,5 +63,6 @@ def serve():
         server.stop(0)
 
 
+# if this file is the entry, run the serve() method
 if __name__ == '__main__':
     serve()
